@@ -3,13 +3,18 @@ package com.robert.myspringboot.dao;
 import com.robert.myspringboot.model.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserDao {
 
-    List<User> getAllUsers();
-    User getUser(UUID userUid);
+    List<User> selectAllUsers();
+
+    Optional<User> selectUserByUserUid(UUID userUid);
+
     int updateUser(User user);
-    int removeUser(UUID userUid);
-    int insertUser(User user);
+
+    int deleteUserByUserUid(UUID userUid);
+
+    int insertUser(UUID userUid, User user);
 }
