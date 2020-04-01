@@ -8,12 +8,13 @@ import java.util.*;
 @Repository
 public class FakeDataDao implements UserDao {
 
-    private static Map<UUID, User> database;
+    private Map<UUID, User> database;
 
-    static {
+    public FakeDataDao() {
         database = new HashMap<>();
         UUID joeUserUid = UUID.randomUUID();
-        database.put(joeUserUid, new User(joeUserUid, "Joe", "Jones", User.Gender.MALE, 22, "joe.jones@gmail.com"));
+        database.put(joeUserUid, new User(joeUserUid, "Joe", "Jones",
+                User.Gender.MALE, 22, "joe.jones@gmail.com"));
     }
 
     @Override
