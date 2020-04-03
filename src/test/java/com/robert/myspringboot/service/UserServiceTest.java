@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -48,7 +49,39 @@ class UserServiceTest {
 
         User user = allUsers.get(0);
 
-        assertUserFields(user);
+        assertAnnaFields(user);
+    }
+
+    @Test
+    void shouldGetAllUsersByGender() {
+        UUID annaUserUid = UUID.randomUUID();
+
+        User anna = new User(annaUserUid, "anna", "montana",
+                User.Gender.FEMALE, 30, "anna@gmail.com");
+
+        UUID joeUserUid = UUID.randomUUID();
+
+        User joe = new User(joeUserUid, "joe", "jones",
+                User.Gender.MALE, 30, "joe.jones@gmail.com");
+
+        List<User> users = new ArrayList<>(Arrays.asList());
+        users.add(anna);
+        users.add(joe);
+        List<User> unmodifiableList = Collections.unmodifiableList(users);
+
+        given(fakeDataDao.selectAllUsers()).willReturn(unmodifiableList);
+
+        List<User> filteredUsers = userService.getAllUsers(Optional.of("female"));
+        assertThat(filteredUsers).hasSize(1);
+        assertAnnaFields(filteredUsers.get(0));
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGenderIsInvalid() {
+        assertThatThrownBy(()-> userService.getAllUsers(Optional.of("asdfasdf")))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Invalid gender");
     }
 
     @Test
@@ -64,7 +97,7 @@ class UserServiceTest {
         assertThat(userOptional.isPresent()).isTrue();
         User user = userOptional.get();
 
-        assertUserFields(user);
+        assertAnnaFields(user);
 
     }
 
@@ -85,7 +118,7 @@ class UserServiceTest {
         verify(fakeDataDao).updateUser(captor.capture());
 
         User user = captor.getValue();
-        assertUserFields(user);
+        assertAnnaFields(user);
 
         assertThat(updateResult).isEqualTo(1);
 
@@ -124,12 +157,12 @@ class UserServiceTest {
 
         User user = captor.getValue();
 
-        assertUserFields(user);
+        assertAnnaFields(user);
 
         assertThat(insertResult).isEqualTo(1);
     }
 
-    private void assertUserFields(User user) {
+    private void assertAnnaFields(User user) {
         assertThat(user.getAge()).isEqualTo(30);
         assertThat(user.getFirstName()).isEqualTo("anna");
         assertThat(user.getLastName()).isEqualTo("montana");
