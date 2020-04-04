@@ -15,12 +15,12 @@ import java.util.UUID;
 
 //@RestController
 //@RequestMapping(path = "/api/v1/users")
-public class UserController {
+public class UserControllerSpringMVC {
 
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserControllerSpringMVC(UserService userService) {
         this.userService = userService;
     }
 
@@ -81,21 +81,5 @@ public class UserController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
-    }
-
-    class ErrorMessage{
-        String errorMessage;
-
-        public ErrorMessage(String errorMessage){
-            this.errorMessage = errorMessage;
-        }
-
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-
-        public void setErrorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
     }
 }
