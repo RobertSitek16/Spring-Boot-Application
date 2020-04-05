@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FakeDataDaoTest {
+public class FakeDataDaoTest {
 
     private FakeDataDao fakeDataDao;
 
