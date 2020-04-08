@@ -78,7 +78,7 @@ public class FakeDataDaoTest {
     }
 
     @Test
-    void insertUser() {
+    void shouldInsertUser() {
         UUID userUid = UUID.randomUUID();
         User user = new User(userUid, "anna", "montana",
                 User.Gender.FEMALE, 30, "anna@gmail.com");
