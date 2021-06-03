@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<rest.easy.client.version>3.1.4.Final</rest.easy.client.version>
+		<rest.easy.client.version>4.5.7.Final</rest.easy.client.version>
 		<paypal.rest.easy.version>2.3.3-RELEASE</paypal.rest.easy.version>
 	</properties>
 
